@@ -1,0 +1,56 @@
+runner/
+target/
+META-INF/
+OSGI-INF/
+*.bak
+.settings/
+.classpath
+.project
+build.properties
+client.sh
+server.sh
+.checkstyle
+paxrunner-runner.zip
+.pmd
+configuration/logs
+provisioning/logs
+forkedcontainertc/logs
+testcases/edmeventplaylist
+testcases/data
+testcases/events
+testcases/[A-Fa-f0-9]*-[A-Fa-f0-9]*-[A-Fa-f0-9]*-[A-Fa-f0-9]*-[A-Fa-f0-9]*
+testcases/logs/*.log
+testframework/data
+testframework/logs
+
+### Eclipse ###
+*.pydevproject
+.project
+.metadata
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# IntelliJ
+.idea/
+*.iml
+
