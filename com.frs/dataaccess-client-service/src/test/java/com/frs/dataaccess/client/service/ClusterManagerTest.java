@@ -1,4 +1,4 @@
-package com.frs.dao;
+package com.frs.dataaccess.client.service;
 
 import org.junit.Test;
 

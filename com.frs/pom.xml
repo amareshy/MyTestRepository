@@ -37,5 +37,6 @@
 		<module>dataaccess-client-service</module>
 		<module>discovery-service-server</module>
 		<module>business-services</module>
+		<module>dataaccess-client-client</module>
 	</modules>
 </project>
