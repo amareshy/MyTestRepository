@@ -5,8 +5,6 @@ package com.frs.dataaccess.client.service.status;
  */
 public interface StatusAdmin
 {
-    /**
-     * @return true if the CIL client has a connection to the Cassandra cluster, otherwise false.
-     */
+    
     boolean isConnected();
 }
