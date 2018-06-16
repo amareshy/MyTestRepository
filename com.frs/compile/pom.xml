@@ -15,9 +15,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cassandra.driver>2.1.9</cassandra.driver>
+		<cassandra.driver>3.1.0</cassandra.driver>
 		<commons.logging>1.2</commons.logging>
 		<junit.version>4.11</junit.version>
+		<spring.version>5.0.7.RELEASE</spring.version>
+		<dbservice.version>0.0.1-SNAPSHOT</dbservice.version>
 	</properties>
 
 	<dependencies>
@@ -31,12 +33,27 @@
 			<artifactId>commons-logging</artifactId>
 			<version>${commons.logging}</version>
 		</dependency>
+		
+		<!-- FRS module dependencies -->
+		<dependency>
+			<groupId>com.frs</groupId>
+			<artifactId>dbservice</artifactId>
+			<version>${dbservice.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Spring Dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

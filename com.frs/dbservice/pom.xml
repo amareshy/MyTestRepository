@@ -4,19 +4,21 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
+		<relativePath>../compile</relativePath>
 		<groupId>com.frs</groupId>
 		<artifactId>compile</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<packaging>jar</packaging>
-	<artifactId>business-services</artifactId>
-	<name>${project.groupId}/${project.artifactId}</name>
+	<artifactId>dbservice</artifactId>
 
 	<properties>
+		<bundle.symbolicName>${project.groupId}.${project.artifactId}</bundle.symbolicName>
+		<bundle.namespace>${project.groupId}.${project.artifactId}</bundle.namespace>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<dependencies>
-	</dependencies>
+	<name>${project.groupId}/${project.artifactId}</name>
+
 </project>

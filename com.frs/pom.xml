@@ -34,9 +34,9 @@
 	</developers>
 	<modules>
 		<module>compile</module>
-		<module>dataaccess-client-service</module>
+		<module>dbservice</module>
+		<module>dbclient</module>
 		<module>discovery-service-server</module>
 		<module>business-services</module>
-		<module>dataaccess-client-client</module>
 	</modules>
 </project>
