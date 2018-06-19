@@ -3,6 +3,7 @@ package com.frs.dbclient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.frs.dbclient.persistence.cql.ClusterConnection;
 import com.frs.dbclient.persistence.cql.ConnectionImpl;
@@ -13,6 +14,7 @@ import com.frs.dbservice.configuration.ConfigurationAdmin;
 import com.frs.dbservice.iterator.EntityIteratorFactory;
 import com.frs.dbservice.status.StatusAdmin;
 
+@Component("dbCluster")
 public class DBClusterImpl implements DBCluster {
 	private static final Logger LOG = LoggerFactory.getLogger(DBClusterImpl.class);
 
@@ -37,8 +39,8 @@ public class DBClusterImpl implements DBCluster {
 
 	
 
-	private final ClusterConnection myClusterConnection;
-	private final ConnectionImpl myConnection;
+	private  ClusterConnection myClusterConnection;
+	private  ConnectionImpl myConnection;
 
 	public DBClusterImpl() {
 		this(new ClusterConnection());

@@ -1,6 +1,7 @@
 package com.frs.dbclient.persistence.cql;
 
+import com.frs.dbservice.Connection;
 
-public class ConnectionImpl{
+public class ConnectionImpl implements Connection{
 
 }
