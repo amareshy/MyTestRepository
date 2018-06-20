@@ -11,7 +11,7 @@ import com.frs.dbservice.DBCluster;
 /**
  * Unit test for simple App.
  */
-@Ignore
+//@Ignore
 public class DBClusterImplTest 
 {
 	@Before

@@ -38,7 +38,7 @@ public class ClusterConnection implements StateListener, AutoCloseable {
 
 	private final ClusterHolder myCluster = new ClusterHolder();
 	private final Set<Host> myUpHosts;
-	private DBClusterConnectionProperties myDBClusterConnectionProperties;
+	private final DBClusterConnectionProperties myDBClusterConnectionProperties = new DBClusterConnectionProperties();
 	private String myLocalDataCenter;
 	private Session mySession = null;
 

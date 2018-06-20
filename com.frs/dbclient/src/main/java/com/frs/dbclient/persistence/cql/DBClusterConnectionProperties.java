@@ -18,7 +18,7 @@ public class DBClusterConnectionProperties {
 	private String myServerUsername;
 	private String myServerPassword;
 
-	private DBClusterConnectionProperties() {
+	public DBClusterConnectionProperties() {
 
 	}
 
