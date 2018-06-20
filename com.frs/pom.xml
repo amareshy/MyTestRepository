@@ -34,8 +34,6 @@
 	</developers>
 	<modules>
 		<module>compile</module>
-		<module>dbservice</module>
-		<module>dbclient</module>
 		<module>discovery-service-server</module>
 		<module>business-services</module>
 	</modules>

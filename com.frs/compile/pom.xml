@@ -18,7 +18,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cassandra.driver>3.1.0</cassandra.driver>
+		<build.plugins.plugin.version>2.3.2</build.plugins.plugin.version>
 		<commons.logging>1.2</commons.logging>
 		<junit.version>4.11</junit.version>
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
@@ -26,11 +26,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.datastax.cassandra</groupId>
-			<artifactId>cassandra-driver-core</artifactId>
-			<version>${cassandra.driver}</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -41,7 +37,7 @@
 		<dependency>
 			<groupId>com.frs</groupId>
 			<artifactId>dbservice</artifactId>
-			<version>${dbservice.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -75,6 +71,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+				<version>${build.plugins.plugin.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>

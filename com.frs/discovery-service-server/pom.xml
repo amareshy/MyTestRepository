@@ -7,14 +7,12 @@
 		<groupId>com.frs</groupId>
 		<artifactId>compile</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../compile</relativePath>
 	</parent>
 
 	<packaging>jar</packaging>
 	<artifactId>discovery-service-server</artifactId>
 	<name>${project.groupId}/${project.artifactId}</name>
-	<version>0.0.1-SNAPSHOT</version>
-
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
