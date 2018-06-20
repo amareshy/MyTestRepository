@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.cassandradb.client</groupId>
+	<artifactId>top</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>${project.groupId}/${project.artifactId}</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<git.host>github.com</git.host>
+		<git.repo>amareshy/flight-reservation-system</git.repo>
+	</properties>
+
+
+	<scm>
+		<url>https://github.com/amareshy/flight-reservation-system.git</url>
+		<connection>scm:git:git@${git.host}:${git.repo}.git</connection>
+		<developerConnection>scm:git:git@${git.host}${git.repo}.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	<developers>
+		<developer>
+			<email>amareshsbh@gmail.com</email>
+			<name>Amaresh Yadav</name>
+			<url>https://github.com/amareshy</url>
+			<id>amareshy</id>
+		</developer>
+	</developers>
+  <modules>
+    <module>compile</module>
+    <module>dbservice</module>
+	<module>dbclient</module>
+  </modules>
+</project>
