@@ -17,7 +17,7 @@
 		<build.plugins.plugin.version>2.3.2</build.plugins.plugin.version>
 		<cassandra.driver>3.1.0</cassandra.driver>
 		<commons.logging>1.2</commons.logging>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.12</junit.version>
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
 	</properties>
 
@@ -50,6 +50,17 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
