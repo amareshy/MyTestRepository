@@ -32,7 +32,7 @@ import com.datastax.driver.core.policies.RetryPolicy;
 import com.datastax.driver.core.policies.TokenAwarePolicy;
 
 /**
- * Class to create and modify databases and tables in C*.
+ * Class to create and modify databases and tables in Cassandra.
  */
 @Component("clusterConnection")
 public class ClusterConnection implements StateListener, AutoCloseable {
@@ -209,9 +209,5 @@ public class ClusterConnection implements StateListener, AutoCloseable {
 			throw new UnableToProcessException("Driver is not initialized!", myClusterConnectionException);
 		}
 		return mySession;
-	}
-	
-	public void setMyDBClusterConnectionProperties(DBClusterConnectionProperties myDBClusterConnectionProperties) {
-		this.myDBClusterConnectionProperties = myDBClusterConnectionProperties;
 	}
 }

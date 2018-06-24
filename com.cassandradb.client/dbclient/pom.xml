@@ -27,6 +27,19 @@
 				<groupId>com.datastax.cassandra</groupId>
 				<artifactId>cassandra-driver-core</artifactId>
 			</dependency>
+			<!-- <dependency>
+				<groupId>info.archinnov</groupId>
+				<artifactId>achilles-embedded</artifactId>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+			</dependency> -->
 			<dependency>
 				<groupId>com.cassandradb.client</groupId>
 				<artifactId>dbservice</artifactId>
@@ -43,6 +56,25 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<build>
+		<!-- This plug-in ignores Unit test failures. It will show the failure in console but build will be success -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<skipTests>false</skipTests>
+					<testFailureIgnore>true</testFailureIgnore>
+					<forkMode>once</forkMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
