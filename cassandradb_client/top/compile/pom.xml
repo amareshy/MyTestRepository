@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.cassandradb.client.top</groupId>
+	<artifactId>compile</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<name>${project.groupId}/${project.artifactId}</name>
+	<properties>
+		<build.plugins.plugin.version>3.5.1</build.plugins.plugin.version>
+		<cassandra.driver>3.1.0</cassandra.driver>
+		<commons.logging>1.2</commons.logging>
+		<junit.version>4.12</junit.version>
+		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
+		<embeded.cassandra>6.0.0</embeded.cassandra>
+		<nety.all.version>4.1.25.Final</nety.all.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.datastax.cassandra</groupId>
+			<artifactId>cassandra-driver-core</artifactId>
+			<version>${cassandra.driver}</version>
+		</dependency>
+		<!-- Embeded Cassandra for Tests -->
+		<!-- <dependency> <groupId>info.archinnov</groupId> <artifactId>achilles-embedded</artifactId> 
+			<version>${embeded.cassandra}</version> <scope>test</scope> </dependency> 
+			<dependency> <groupId> org.apache.cassandra</groupId> <artifactId>cassandra-all</artifactId> 
+			<version>3.11.2</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-log4j12</artifactId> </exclusion> <exclusion> <groupId>log4j</groupId> 
+			<artifactId>log4j</artifactId> </exclusion> </exclusions> </dependency> -->
+		<!-- Needed for Embeded cassandra -->
+		<!-- <dependency> <groupId>io.netty</groupId> <artifactId>netty-all</artifactId> 
+			<version>${nety.all.version}</version> </dependency> <dependency> <groupId>com.google.guava</groupId> 
+			<artifactId>guava</artifactId> <version>18.0</version> </dependency> -->
+
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons.logging}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Spring Dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${build.plugins.plugin.version}</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.10</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
