@@ -20,9 +20,9 @@ import com.datastax.driver.core.Host;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Session.State;
 
-/*@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
-*/public class ClusterConnectionTest {
+public class ClusterConnectionTest {
 
     @Autowired
     private ClusterConnection myClusterConnection;
@@ -36,7 +36,7 @@ import com.datastax.driver.core.Session.State;
 
     }
 
-//    @Test
+    @Test
     public void testCreateClusterConnectionForConnectingCluster() throws UnableToProcessException {
         assertNotNull(myClusterConnection);
         Session session = myClusterConnection.getSession();
