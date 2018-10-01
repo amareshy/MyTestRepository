@@ -26,11 +26,11 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
+			<!-- <dependency>
 				<groupId>com.cassandradb.client.dbservice</groupId>
 				<artifactId>service</artifactId>
 				<version>${dbservice.version}</version>
-			</dependency>
+			</dependency> -->
 		</dependencies>
 	</dependencyManagement>
 </project>

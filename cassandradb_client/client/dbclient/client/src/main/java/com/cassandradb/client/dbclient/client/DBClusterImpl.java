@@ -2,7 +2,6 @@ package com.cassandradb.client.dbclient.client;
 
 
 
-import java.sql.Connection;
 
 import javax.annotation.PostConstruct;
 
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.cassandradb.client.dbclient.client.persistence.cql.ClusterConnection;
 import com.cassandradb.client.dbclient.client.persistence.requesthandler.ConnectionImpl;
 import com.cassandradb.client.dbservice.service.AsyncConnection;
+import com.cassandradb.client.dbservice.service.Connection;
 import com.cassandradb.client.dbservice.service.DBCluster;
 import com.cassandradb.client.dbservice.service.configuration.ConfigurationAdmin;
 import com.cassandradb.client.dbservice.service.exceptions.DbClusterInitializationException;

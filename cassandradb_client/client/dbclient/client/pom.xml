@@ -32,10 +32,10 @@
 				<scope>test</scope> </dependency> <dependency> <groupId>io.netty</groupId> 
 				<artifactId>netty-all</artifactId> </dependency> <dependency> <groupId>com.google.guava</groupId> 
 				<artifactId>guava</artifactId> </dependency> -->
-			<dependency>
+			<!-- <dependency>
 				<groupId>com.cassandradb.client.dbservice</groupId>
 				<artifactId>service</artifactId>
-			</dependency>
+			</dependency> -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>

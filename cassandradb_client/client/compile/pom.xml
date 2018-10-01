@@ -21,9 +21,13 @@
 		<bundle.symbolicName>${project.groupId}.${project.artifactId}</bundle.symbolicName>
 		<bundle.namespace>${project.groupId}.${project.artifactId}</bundle.namespace>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dbservice.version>0.0.1-SNAPSHOT</dbservice.version>
 	</properties>
 
 	<dependencyManagement>
-		
+		<dependencies>
+			
+		</dependencies>
+
 	</dependencyManagement>
 </project>
