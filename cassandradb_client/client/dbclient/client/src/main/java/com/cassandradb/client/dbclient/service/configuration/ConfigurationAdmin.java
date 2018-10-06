@@ -1,13 +1,13 @@
-package com.cassandradb.client.dbservice.service.configuration;
+package com.cassandradb.client.dbclient.service.configuration;
 
 import java.util.List;
 import java.util.Map;
 
-import com.cassandradb.client.dbservice.service.exceptions.ConfigNotFoundException;
-import com.cassandradb.client.dbservice.service.exceptions.DatabaseAlreadyExistsException;
-import com.cassandradb.client.dbservice.service.exceptions.InvalidRequestException;
-import com.cassandradb.client.dbservice.service.exceptions.ProcessingException;
-import com.cassandradb.client.dbservice.service.exceptions.TableAlreadyExistsException;
+import com.cassandradb.client.dbclient.service.exceptions.ConfigNotFoundException;
+import com.cassandradb.client.dbclient.service.exceptions.DatabaseAlreadyExistsException;
+import com.cassandradb.client.dbclient.service.exceptions.InvalidRequestException;
+import com.cassandradb.client.dbclient.service.exceptions.ProcessingException;
+import com.cassandradb.client.dbclient.service.exceptions.TableAlreadyExistsException;
 
 public interface ConfigurationAdmin {
     /**

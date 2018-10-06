@@ -1,4 +1,4 @@
-package com.cassandradb.client.dbservice.service.exceptions;
+package com.cassandradb.client.dbclient.service.exceptions;
 
 /**
  * Thrown when database exists and trying to create new one with the same name.

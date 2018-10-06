@@ -1,4 +1,4 @@
-package com.cassandradb.client.dbservice.service.exceptions;
+package com.cassandradb.client.dbclient.service.exceptions;
 
 public class AlreadyExistException extends DbServiceException {
     private static final long serialVersionUID = 1L;

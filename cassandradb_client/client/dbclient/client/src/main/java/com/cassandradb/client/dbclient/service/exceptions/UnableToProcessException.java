@@ -1,4 +1,4 @@
-package com.cassandradb.client.dbservice.service.exceptions;
+package com.cassandradb.client.dbclient.service.exceptions;
 
 /**
  * Thrown when the cluster is not available to process the request.

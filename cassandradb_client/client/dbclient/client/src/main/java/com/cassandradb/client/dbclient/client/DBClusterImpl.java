@@ -12,21 +12,20 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.cassandradb.client.dbclient.client.persistence.cql.ClusterConnection;
-import com.cassandradb.client.dbclient.client.persistence.requesthandler.ConnectionImpl;
-import com.cassandradb.client.dbservice.service.AsyncConnection;
-import com.cassandradb.client.dbservice.service.Connection;
-import com.cassandradb.client.dbservice.service.DBCluster;
-import com.cassandradb.client.dbservice.service.configuration.ConfigurationAdmin;
-import com.cassandradb.client.dbservice.service.exceptions.DbClusterInitializationException;
-import com.cassandradb.client.dbservice.service.iterator.EntityIteratorFactory;
-import com.cassandradb.client.dbservice.service.service.status.StatusAdmin;
+import com.cassandradb.client.dbclient.service.AsyncConnection;
+import com.cassandradb.client.dbclient.service.Connection;
+import com.cassandradb.client.dbclient.service.DBCluster;
+import com.cassandradb.client.dbclient.service.configuration.ConfigurationAdmin;
+import com.cassandradb.client.dbclient.service.exceptions.DbClusterInitializationException;
+import com.cassandradb.client.dbclient.service.iterator.EntityIteratorFactory;
+import com.cassandradb.client.dbclient.service.service.status.StatusAdmin;
 
 @Repository("dbCluster")
 public class DBClusterImpl implements DBCluster {
     private static final Logger LOG = LoggerFactory.getLogger(DBClusterImpl.class);
 
     /**
-     * Default value for Cassandra port.
+     * Default value for Cassandra port(i.e. value of native_transport_port in yaml file).
      */
     public static final int DEFAULT_SERVER_PORT = 12742;
     /**
@@ -49,7 +48,7 @@ public class DBClusterImpl implements DBCluster {
 
     @Autowired(required = true)
     @Qualifier("myConnection")
-    private ConnectionImpl myConnection;
+    private Connection myConnection;
 
     public DBClusterImpl() {
 
@@ -70,6 +69,7 @@ public class DBClusterImpl implements DBCluster {
             setupConnection();
         }
     }
+    
 
     @Override
     public Connection getConnection() {

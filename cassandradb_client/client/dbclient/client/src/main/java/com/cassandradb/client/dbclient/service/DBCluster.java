@@ -1,8 +1,8 @@
-package com.cassandradb.client.dbservice.service;
+package com.cassandradb.client.dbclient.service;
 
-import com.cassandradb.client.dbservice.service.configuration.ConfigurationAdmin;
-import com.cassandradb.client.dbservice.service.iterator.EntityIteratorFactory;
-import com.cassandradb.client.dbservice.service.service.status.StatusAdmin;
+import com.cassandradb.client.dbclient.service.configuration.ConfigurationAdmin;
+import com.cassandradb.client.dbclient.service.iterator.EntityIteratorFactory;
+import com.cassandradb.client.dbclient.service.service.status.StatusAdmin;
 
 /**
  * Instance of this class provides handles for Database cluster.

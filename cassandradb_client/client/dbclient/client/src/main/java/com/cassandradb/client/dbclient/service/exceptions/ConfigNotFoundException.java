@@ -8,7 +8,7 @@
 // and conditions stipulated in the agreement/contract under which the
 // program(s) have been supplied.
 // **********************************************************************
-package com.cassandradb.client.dbservice.service.exceptions;
+package com.cassandradb.client.dbclient.service.exceptions;
 
 /**
  * This exception will be thrown when no configuration is found.

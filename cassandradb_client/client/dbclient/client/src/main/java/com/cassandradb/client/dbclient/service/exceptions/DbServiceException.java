@@ -1,4 +1,4 @@
-package com.cassandradb.client.dbservice.service.exceptions;
+package com.cassandradb.client.dbclient.service.exceptions;
 
 /**
  * Data Access top level exception. All checked exceptions will be child of this exception.

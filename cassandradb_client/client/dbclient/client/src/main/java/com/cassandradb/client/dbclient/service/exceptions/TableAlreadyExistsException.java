@@ -1,4 +1,4 @@
-package com.cassandradb.client.dbservice.service.exceptions;
+package com.cassandradb.client.dbclient.service.exceptions;
 
 /**
  * Throws when Table already exists and trying to create a new with same name.

@@ -1,4 +1,4 @@
-package com.cassandradb.client.dbservice.service;
+package com.cassandradb.client.dbclient.service;
 
 /**
  * The DB Connection provides support for basic operations towards the C* database.

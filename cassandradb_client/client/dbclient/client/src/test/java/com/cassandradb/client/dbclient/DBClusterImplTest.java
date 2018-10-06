@@ -8,7 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.cassandradb.client.dbclient.client.AppConfig;
-import com.cassandradb.client.dbservice.service.DBCluster;
+import com.cassandradb.client.dbclient.service.DBCluster;
 
 /**
  * Unit test for simple App.
