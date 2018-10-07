@@ -1,31 +1,37 @@
 package com.cassandradb.client.dbclient;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cassandradb.client.dbclient.client.AppConfig;
+import com.cassandradb.client.dbclient.client.persistence.cql.ClusterConnection;
 import com.cassandradb.client.dbclient.service.DBCluster;
+import com.cassandradb.client.dbclient.service.exceptions.UnableToProcessException;
+import com.cassandradb.client.dbclient.service.status.StatusAdmin;
 
 /**
- * Unit test for simple App.
+ * Unit test for DBCluster.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {AppConfig.class})
 public class DBClusterImplTest {
-    private AbstractApplicationContext appContext;
-
-    @Before
-    public void before() {
-        appContext = new AnnotationConfigApplicationContext(AppConfig.class);
-    }
+    @Autowired
+    private DBCluster myDBCluster;
+    @Autowired
+    private ClusterConnection myClusterConn;
 
     @Test
-    public void clusterTest() {
-        DBCluster dbCluster = appContext.getBean("dbCluster", DBCluster.class);
-        assertNotNull(dbCluster);
+    public void testStatusAdminForClusterConnection() throws UnableToProcessException {
+    	assertNotNull(myDBCluster);
+    	StatusAdmin statusAdmin = myDBCluster.getStatusAdmin();
+    	assertNotNull(statusAdmin);
+    	assertTrue(statusAdmin.isConnected());
     }
-
 
 }

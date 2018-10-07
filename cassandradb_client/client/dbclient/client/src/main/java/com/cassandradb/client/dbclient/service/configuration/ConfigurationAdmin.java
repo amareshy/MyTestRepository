@@ -3,6 +3,8 @@ package com.cassandradb.client.dbclient.service.configuration;
 import java.util.List;
 import java.util.Map;
 
+import com.cassandradb.client.dbclient.client.configuraion.DatabaseConfig;
+import com.cassandradb.client.dbclient.client.configuraion.TableConfig;
 import com.cassandradb.client.dbclient.service.exceptions.ConfigNotFoundException;
 import com.cassandradb.client.dbclient.service.exceptions.DatabaseAlreadyExistsException;
 import com.cassandradb.client.dbclient.service.exceptions.InvalidRequestException;

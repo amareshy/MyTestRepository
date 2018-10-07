@@ -26,6 +26,7 @@ public class ClusterConnectionTest {
 
     @Autowired
     private ClusterConnection myClusterConnection;
+  
 //	private CassandraShutDownHook shutdownHook;
 
     @Before
@@ -33,7 +34,6 @@ public class ClusterConnectionTest {
 		  /*shutdownHook = new CassandraShutDownHook();
 		  CassandraEmbeddedServerBuilder.builder().withShutdownHook(shutdownHook).buildServer();*/
 //		CassandraDaemon.main(new String[]{});
-
     }
 
     @Test
@@ -41,7 +41,6 @@ public class ClusterConnectionTest {
         assertNotNull(myClusterConnection);
         Session session = myClusterConnection.getSession();
         assertNotNull(session);
-        session.init();
         State state = session.getState();
         assertNotNull(state);
         System.out.println("This session is currently connected to the hosts : " + state.getConnectedHosts());
@@ -49,6 +48,8 @@ public class ClusterConnectionTest {
         assertFalse(hosts.isEmpty());
         System.out.println("All Known hosts in the cluster : " + hosts);
     }
+    
+   
 
     @After
     public void shutDown() {

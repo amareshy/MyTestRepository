@@ -9,18 +9,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import com.cassandradb.client.dbclient.client.persistence.cql.ClusterConnection;
-import com.cassandradb.client.dbclient.service.AsyncConnection;
-import com.cassandradb.client.dbclient.service.Connection;
+import com.cassandradb.client.dbclient.service.AsyncConnectionRequestHandler;
+import com.cassandradb.client.dbclient.service.ConnectionRequestHandler;
 import com.cassandradb.client.dbclient.service.DBCluster;
 import com.cassandradb.client.dbclient.service.configuration.ConfigurationAdmin;
 import com.cassandradb.client.dbclient.service.exceptions.DbClusterInitializationException;
 import com.cassandradb.client.dbclient.service.iterator.EntityIteratorFactory;
-import com.cassandradb.client.dbclient.service.service.status.StatusAdmin;
+import com.cassandradb.client.dbclient.service.status.StatusAdmin;
 
-@Repository("dbCluster")
+@Component("dbCluster")
 public class DBClusterImpl implements DBCluster {
     private static final Logger LOG = LoggerFactory.getLogger(DBClusterImpl.class);
 
@@ -47,8 +47,18 @@ public class DBClusterImpl implements DBCluster {
     private ClusterConnection myClusterConnection;
 
     @Autowired(required = true)
-    @Qualifier("myConnection")
-    private Connection myConnection;
+    @Qualifier("myConnectionRequestHandler")
+    private ConnectionRequestHandler myConnectionRequestHandler;
+    
+    @Autowired(required = true)
+    @Qualifier("myAsyncConnectionRequestHandler")
+    private AsyncConnectionRequestHandler myAsyncConnectionRequestHandler;
+    
+    @Autowired(required = true)
+    private ConfigurationAdmin myConfigurationAdmin;
+    
+    @Autowired
+    private StatusAdmin myStatusAdmin;
 
     public DBClusterImpl() {
 
@@ -68,17 +78,18 @@ public class DBClusterImpl implements DBCluster {
         if (!myClusterConnection.isConnected()) {
             setupConnection();
         }
+        
     }
     
 
     @Override
-    public Connection getConnection() {
-        return null;
+    public ConnectionRequestHandler getConnectionRequestHandler() {
+        return myConnectionRequestHandler;
     }
 
     @Override
-    public AsyncConnection getAsyncConnection() {
-        return null;
+    public AsyncConnectionRequestHandler getAsyncConnectionRequestHandler() {
+        return myAsyncConnectionRequestHandler;
     }
 
     @Override
@@ -88,12 +99,12 @@ public class DBClusterImpl implements DBCluster {
 
     @Override
     public StatusAdmin getStatusAdmin() {
-        return null;
+        return myStatusAdmin;
     }
 
     @Override
     public ConfigurationAdmin getConfigurationAdmin() {
-        return null;
+        return myConfigurationAdmin;
     }
 
 }

@@ -5,6 +5,12 @@ package com.cassandradb.client.dbclient.service;
  * <br/>
  * This interface defines the methods to store data in, and get data from C*.
  */
-public interface Connection {
+public interface ConnectionRequestHandler {
+	
+	void insert(); 
+	void delete();
+	void insertBatch();
+	void get();
+	void getAll();
 
 }

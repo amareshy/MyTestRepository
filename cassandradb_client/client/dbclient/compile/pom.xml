@@ -26,11 +26,19 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- <dependency>
-				<groupId>com.cassandradb.client.dbservice</groupId>
-				<artifactId>service</artifactId>
-				<version>${dbservice.version}</version>
-			</dependency> -->
+			<!-- <dependency> <groupId>com.cassandradb.client.dbservice</groupId> 
+				<artifactId>service</artifactId> <version>${dbservice.version}</version> 
+				</dependency> -->
+			<dependency>
+				<groupId>com.datastax.cassandra</groupId>
+				<artifactId>cassandra-driver-mapping</artifactId>
+				<version>${cassandra.driver}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons-lang.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

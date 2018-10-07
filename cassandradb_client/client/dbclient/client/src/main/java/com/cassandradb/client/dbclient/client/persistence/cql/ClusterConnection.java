@@ -30,6 +30,7 @@ import com.datastax.driver.core.policies.ExponentialReconnectionPolicy;
 import com.datastax.driver.core.policies.LoadBalancingPolicy;
 import com.datastax.driver.core.policies.RetryPolicy;
 import com.datastax.driver.core.policies.TokenAwarePolicy;
+import com.datastax.driver.mapping.MappingManager;
 
 /**
  * Class to create and modify databases and tables in Cassandra.
@@ -45,7 +46,16 @@ public class ClusterConnection implements StateListener, AutoCloseable {
     private final ClusterHolder myCluster = null;
     @Autowired
     private DBClusterConnectionProperties myDBClusterConnectionProperties;
+    
+    /* Session instances are thread-safe and usually a single instance is enough per application. 
+     * Each session maintains multiple connections to the cluster nodes.
+     * */
     private Session mySession = null;
+    
+    /* MappingManager is thread-safe and can be safely shared throughout application. 
+     * Create one instance at startup, right after the c* session established. 
+     * */
+    private MappingManager myMappingManager = null;
 
     private Exception myClusterConnectionException = null;
 
@@ -111,6 +121,8 @@ public class ClusterConnection implements StateListener, AutoCloseable {
         myCluster.getCluster().register(QueryLogger.builder().withConstantThreshold(50).build());
         mySession = myCluster.getCluster().newSession();
         LOG.info("Cluster connection created with protocol version {}", protocolVersion);
+        
+        myMappingManager = new MappingManager(mySession);
     }
 
     private LoadBalancingPolicy setLoadBalancingPolicy() {
@@ -141,32 +153,36 @@ public class ClusterConnection implements StateListener, AutoCloseable {
 
     @Override
     public void onAdd(Host host) {
-
+    	LOG.info("A new node {0} is added to cluster at DC {1}", host.getAddress(), host.getDatacenter());
+    	myUpHosts.add(host);
     }
 
     @Override
     public void onDown(Host host) {
-
+    	LOG.info("A node {0} is getting down at DC {1}", host.getAddress(), host.getDatacenter());
+    	myUpHosts.remove(host);
     }
 
     @Override
     public void onRemove(Host host) {
-
+    	LOG.info("A node {0} is removed from DC {1}", host.getAddress(), host.getDatacenter());
+    	myUpHosts.remove(host);
     }
 
     @Override
     public void onUp(Host host) {
-
+    	LOG.info("Node {0} is up at DC {1}", host.getAddress(), host.getDatacenter());
+    	myUpHosts.add(host);
     }
 
     @Override
     public void onRegister(Cluster cluster) {
-
+    	//
     }
 
     @Override
     public void onUnregister(Cluster cluster) {
-
+    	//
     }
 
     /**
@@ -208,5 +224,12 @@ public class ClusterConnection implements StateListener, AutoCloseable {
             throw new UnableToProcessException("Driver is not initialized!", myClusterConnectionException);
         }
         return mySession;
+    }
+    
+    public MappingManager getMappingManager() throws UnableToProcessException {
+        if (!myCluster.isAvailable()) {
+            throw new UnableToProcessException("Driver is not initialized!", myClusterConnectionException);
+        }
+        return myMappingManager;
     }
 }

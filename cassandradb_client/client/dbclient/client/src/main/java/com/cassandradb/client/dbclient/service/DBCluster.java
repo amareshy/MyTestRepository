@@ -2,7 +2,7 @@ package com.cassandradb.client.dbclient.service;
 
 import com.cassandradb.client.dbclient.service.configuration.ConfigurationAdmin;
 import com.cassandradb.client.dbclient.service.iterator.EntityIteratorFactory;
-import com.cassandradb.client.dbclient.service.service.status.StatusAdmin;
+import com.cassandradb.client.dbclient.service.status.StatusAdmin;
 
 /**
  * Instance of this class provides handles for Database cluster.
@@ -14,18 +14,18 @@ import com.cassandradb.client.dbclient.service.service.status.StatusAdmin;
  */
 public interface DBCluster {
     /**
-     * Returns a {@link Connection} to be used for synchronous operations against the cluster.
+     * Returns a {@link ConnectionRequestHandler} to be used for synchronous operations against the cluster.
      *
      * @return the connection
      */
-    Connection getConnection();
+    ConnectionRequestHandler getConnectionRequestHandler();
 
     /**
-     * Returns a {@link AsyncConnection} to be used for asynchronous operations against the cluster.
+     * Returns a {@link AsyncConnectionRequestHandler} to be used for asynchronous operations against the cluster.
      *
      * @return the async connection
      */
-    AsyncConnection getAsyncConnection();
+    AsyncConnectionRequestHandler getAsyncConnectionRequestHandler();
 
     /**
      * Returns a {@link EntityIteratorFactory} which provides iterators over Entity Base Keys.
