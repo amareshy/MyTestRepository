@@ -1,8 +1,5 @@
 package com.cassandradb.client.dbclient.client;
 
-
-
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -11,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.cassandradb.client.dbclient.client.persistence.cql.ClusterConnection;
+import com.cassandradb.client.dbclient.client.datasource.ClusterConnection;
 import com.cassandradb.client.dbclient.service.AsyncConnectionRequestHandler;
 import com.cassandradb.client.dbclient.service.ConnectionRequestHandler;
 import com.cassandradb.client.dbclient.service.DBCluster;
@@ -22,89 +19,70 @@ import com.cassandradb.client.dbclient.service.status.StatusAdmin;
 
 @Component("dbCluster")
 public class DBClusterImpl implements DBCluster {
-    private static final Logger LOG = LoggerFactory.getLogger(DBClusterImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DBClusterImpl.class);
 
-    /**
-     * Default value for Cassandra port(i.e. value of native_transport_port in yaml file).
-     */
-    public static final int DEFAULT_SERVER_PORT = 12742;
-    /**
-     * Default value for Cassandra hostname.
-     * <p>
-     * This default value is typically only usable in a test environment.
-     */
-    public static final String DEFAULT_SERVER_HOST = "localhost";
-    /**
-     * Default value for Cassandra client username
-     */
-    public static final String DEFAULT_SERVER_USERNAME = "cassandra";
-    /**
-     * Default value for Cassandra client password
-     */
-    public static final String DEFAULT_SERVER_PASSWORD = "cassandra";
+	@Autowired(required = true)
+	private ClusterConnection myClusterConnection;
 
-    @Autowired(required = true)
-    private ClusterConnection myClusterConnection;
+	@Autowired(required = true)
+	@Qualifier("myConnectionRequestHandler")
+	private ConnectionRequestHandler myConnectionRequestHandler;
 
-    @Autowired(required = true)
-    @Qualifier("myConnectionRequestHandler")
-    private ConnectionRequestHandler myConnectionRequestHandler;
-    
-    @Autowired(required = true)
-    @Qualifier("myAsyncConnectionRequestHandler")
-    private AsyncConnectionRequestHandler myAsyncConnectionRequestHandler;
-    
-    @Autowired(required = true)
-    private ConfigurationAdmin myConfigurationAdmin;
-    
-    @Autowired
-    private StatusAdmin myStatusAdmin;
+	@Autowired(required = true)
+	@Qualifier("myAsyncConnectionRequestHandler")
+	private AsyncConnectionRequestHandler myAsyncConnectionRequestHandler;
 
-    public DBClusterImpl() {
+	@Autowired(required = true)
+	private ConfigurationAdmin myConfigurationAdmin;
 
-    }
+	@Autowired
+	private StatusAdmin myStatusAdmin;
 
-    private void setupConnection() {
-        myClusterConnection.connectCluster();
-    }
+	public DBClusterImpl() {
 
-    @PostConstruct
-    public void init() throws DbClusterInitializationException {
-        if (myClusterConnection == null) {
-            LOG.error("ClusterConnection is not initialized and injected to DbCluster.");
-            throw new DbClusterInitializationException("ClusterConnection is not initialized and injected to DbCluster.");
-        }
+	}
 
-        if (!myClusterConnection.isConnected()) {
-            setupConnection();
-        }
-        
-    }
-    
+	private void setupConnection() {
+		myClusterConnection.connectCluster();
+	}
 
-    @Override
-    public ConnectionRequestHandler getConnectionRequestHandler() {
-        return myConnectionRequestHandler;
-    }
+	@PostConstruct
+	public void init() throws DbClusterInitializationException {
+		if (myClusterConnection == null) {
+			LOG.error("ClusterConnection is not initialized and injected to DbCluster.");
+			throw new DbClusterInitializationException(
+					"ClusterConnection is not initialized and injected to DbCluster.");
+		}
 
-    @Override
-    public AsyncConnectionRequestHandler getAsyncConnectionRequestHandler() {
-        return myAsyncConnectionRequestHandler;
-    }
+		if (!myClusterConnection.isConnected()) {
+			setupConnection();
+		}
 
-    @Override
-    public EntityIteratorFactory getEntityIteratorFactory() {
-        return null;
-    }
+	}
 
-    @Override
-    public StatusAdmin getStatusAdmin() {
-        return myStatusAdmin;
-    }
+	@Override
+	public ConnectionRequestHandler getConnectionRequestHandler() {
+		return myConnectionRequestHandler;
+	}
 
-    @Override
-    public ConfigurationAdmin getConfigurationAdmin() {
-        return myConfigurationAdmin;
-    }
+	@Override
+	public AsyncConnectionRequestHandler getAsyncConnectionRequestHandler() {
+		return myAsyncConnectionRequestHandler;
+	}
+
+	@Override
+	public EntityIteratorFactory getEntityIteratorFactory() {
+		return null;
+	}
+
+	@Override
+	public StatusAdmin getStatusAdmin() {
+		return myStatusAdmin;
+	}
+
+	@Override
+	public ConfigurationAdmin getConfigurationAdmin() {
+		return myConfigurationAdmin;
+	}
 
 }

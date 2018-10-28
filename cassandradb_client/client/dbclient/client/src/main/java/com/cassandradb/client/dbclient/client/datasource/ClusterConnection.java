@@ -1,4 +1,4 @@
-package com.cassandradb.client.dbclient.client.persistence.cql;
+package com.cassandradb.client.dbclient.client.datasource;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -45,7 +45,7 @@ public class ClusterConnection implements StateListener, AutoCloseable {
     @Autowired
     private final ClusterHolder myCluster = null;
     @Autowired
-    private DBClusterConnectionProperties myDBClusterConnectionProperties;
+    private ConnectionProperties myDBClusterConnectionProperties;
     
     /* Session instances are thread-safe and usually a single instance is enough per application. 
      * Each session maintains multiple connections to the cluster nodes.
@@ -148,7 +148,14 @@ public class ClusterConnection implements StateListener, AutoCloseable {
 
     @Override
     public void close() throws Exception {
+    	 myUpHosts.clear();
 
+         if (mySession != null)
+         {
+             mySession.close();
+             mySession = null;
+         }
+         myCluster.setCluster(null);
     }
 
     @Override

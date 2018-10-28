@@ -14,12 +14,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cassandradb.client.dbclient.client.AppConfig;
-import com.cassandradb.client.dbclient.client.persistence.cql.ClusterConnection;
+import com.cassandradb.client.dbclient.client.datasource.ClusterConnection;
 import com.cassandradb.client.dbclient.service.exceptions.UnableToProcessException;
 import com.datastax.driver.core.Host;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Session.State;
 
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 public class ClusterConnectionTest {
