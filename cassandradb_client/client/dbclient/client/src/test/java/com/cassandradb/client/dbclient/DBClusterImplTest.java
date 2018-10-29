@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cassandradb.client.dbclient.client.AppConfig;
-import com.cassandradb.client.dbclient.client.datasource.ClusterConnection;
 import com.cassandradb.client.dbclient.service.DBCluster;
 import com.cassandradb.client.dbclient.service.exceptions.UnableToProcessException;
 import com.cassandradb.client.dbclient.service.status.StatusAdmin;
@@ -21,19 +20,21 @@ import com.cassandradb.client.dbclient.service.status.StatusAdmin;
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
-public class DBClusterImplTest {
+@ContextConfiguration(classes =
+{ AppConfig.class })
+public class DBClusterImplTest
+{
     @Autowired
     private DBCluster myDBCluster;
-    @Autowired
-    private ClusterConnection myClusterConn;
 
     @Test
-    public void testStatusAdminForClusterConnection() throws UnableToProcessException {
-    	assertNotNull(myDBCluster);
-    	StatusAdmin statusAdmin = myDBCluster.getStatusAdmin();
-    	assertNotNull(statusAdmin);
-    	assertTrue(statusAdmin.isConnected());
+    public void testStatusAdminForClusterConnection()
+        throws UnableToProcessException
+    {
+	assertNotNull(myDBCluster);
+	StatusAdmin statusAdmin = myDBCluster.getStatusAdmin();
+	assertNotNull(statusAdmin);
+	assertTrue(statusAdmin.isConnected());
     }
 
 }

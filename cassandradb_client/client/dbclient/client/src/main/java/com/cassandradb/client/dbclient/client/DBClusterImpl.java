@@ -18,71 +18,84 @@ import com.cassandradb.client.dbclient.service.iterator.EntityIteratorFactory;
 import com.cassandradb.client.dbclient.service.status.StatusAdmin;
 
 @Component("dbCluster")
-public class DBClusterImpl implements DBCluster {
-	private static final Logger LOG = LoggerFactory.getLogger(DBClusterImpl.class);
+public class DBClusterImpl implements DBCluster
+{
+    private static final Logger LOG = LoggerFactory
+        .getLogger(DBClusterImpl.class);
 
-	@Autowired(required = true)
-	private ClusterConnection myClusterConnection;
+    @Autowired(required = true)
+    private ClusterConnection myClusterConnection;
 
-	@Autowired(required = true)
-	@Qualifier("myConnectionRequestHandler")
-	private ConnectionRequestHandler myConnectionRequestHandler;
+    @Autowired(required = true)
+    @Qualifier("myConnectionRequestHandler")
+    private ConnectionRequestHandler myConnectionRequestHandler;
 
-	@Autowired(required = true)
-	@Qualifier("myAsyncConnectionRequestHandler")
-	private AsyncConnectionRequestHandler myAsyncConnectionRequestHandler;
+    @Autowired(required = true)
+    @Qualifier("myAsyncConnectionRequestHandler")
+    private AsyncConnectionRequestHandler myAsyncConnectionRequestHandler;
 
-	@Autowired(required = true)
-	private ConfigurationAdmin myConfigurationAdmin;
+    @Autowired(required = true)
+    private ConfigurationAdmin myConfigurationAdmin;
 
-	@Autowired
-	private StatusAdmin myStatusAdmin;
+    @Autowired
+    private StatusAdmin myStatusAdmin;
 
-	public DBClusterImpl() {
+    public DBClusterImpl()
+    {
 
+    }
+
+    private void setupConnection()
+    {
+	myClusterConnection.connectCluster();
+    }
+
+    @PostConstruct
+    public void init() throws DbClusterInitializationException
+    {
+	if (myClusterConnection == null)
+	{
+	    LOG.error(
+	        "ClusterConnection is not initialized and injected to DbCluster.");
+	    throw new DbClusterInitializationException(
+	        "ClusterConnection is not initialized and injected to DbCluster.");
 	}
 
-	private void setupConnection() {
-		myClusterConnection.connectCluster();
+	if (!myClusterConnection.isConnected())
+	{
+	    setupConnection();
 	}
 
-	@PostConstruct
-	public void init() throws DbClusterInitializationException {
-		if (myClusterConnection == null) {
-			LOG.error("ClusterConnection is not initialized and injected to DbCluster.");
-			throw new DbClusterInitializationException(
-					"ClusterConnection is not initialized and injected to DbCluster.");
-		}
+    }
 
-		if (!myClusterConnection.isConnected()) {
-			setupConnection();
-		}
+    @Override
+    public ConnectionRequestHandler getConnectionRequestHandler()
+    {
+	return myConnectionRequestHandler;
+    }
 
-	}
+    @Override
+    public AsyncConnectionRequestHandler getAsyncConnectionRequestHandler()
+    {
+	return myAsyncConnectionRequestHandler;
+    }
 
-	@Override
-	public ConnectionRequestHandler getConnectionRequestHandler() {
-		return myConnectionRequestHandler;
-	}
+    @Override
+    public EntityIteratorFactory getEntityIteratorFactory()
+    {
+	return null;
+    }
 
-	@Override
-	public AsyncConnectionRequestHandler getAsyncConnectionRequestHandler() {
-		return myAsyncConnectionRequestHandler;
-	}
+    @Override
+    public StatusAdmin getStatusAdmin()
+    {
+	return myStatusAdmin;
+    }
 
-	@Override
-	public EntityIteratorFactory getEntityIteratorFactory() {
-		return null;
-	}
-
-	@Override
-	public StatusAdmin getStatusAdmin() {
-		return myStatusAdmin;
-	}
-
-	@Override
-	public ConfigurationAdmin getConfigurationAdmin() {
-		return myConfigurationAdmin;
-	}
+    @Override
+    public ConfigurationAdmin getConfigurationAdmin()
+    {
+	return myConfigurationAdmin;
+    }
 
 }
