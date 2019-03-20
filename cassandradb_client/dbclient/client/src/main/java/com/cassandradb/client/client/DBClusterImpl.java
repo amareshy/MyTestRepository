@@ -45,11 +45,6 @@ public class DBClusterImpl implements DBCluster
 
     }
 
-    private void setupConnection()
-    {
-	myClusterConnection.connectCluster();
-    }
-
     @PostConstruct
     public void init() throws DbClusterInitializationException
     {
@@ -65,7 +60,11 @@ public class DBClusterImpl implements DBCluster
 	{
 	    setupConnection();
 	}
+    }
 
+    private void setupConnection()
+    {
+	myClusterConnection.connectCluster();
     }
 
     @Override

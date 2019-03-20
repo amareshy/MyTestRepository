@@ -7,7 +7,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.cassandradb.client.client.service.exceptions.UnableToProcessException;
 import com.datastax.driver.core.Cluster;
@@ -33,12 +32,13 @@ import com.datastax.driver.core.policies.TokenAwarePolicy;
 import com.datastax.driver.mapping.MappingManager;
 
 /**
- * Class to create and modify databases and tables in Cassandra.
+ * This class is responsible to init connection with Cassandra cluster and
+ * provide session instance to perform DB operation on keyspaces and tables. The
+ * session instances are thread-safe and a single session instance maintains
+ * multiple connections to the cluster nodes.
  */
-@Component("clusterConnection")
 public class ClusterConnection implements StateListener, AutoCloseable
 {
-
     private static final Logger LOG = LoggerFactory
         .getLogger(ClusterConnection.class);
     private static final ProtocolVersion protocolVersion = ProtocolVersion.V2;
@@ -146,7 +146,6 @@ public class ClusterConnection implements StateListener, AutoCloseable
 
     private LoadBalancingPolicy setLoadBalancingPolicy()
     {
-
 	return new TokenAwarePolicy(DCAwareRoundRobinPolicy.builder().build(),
 	    false);
     }

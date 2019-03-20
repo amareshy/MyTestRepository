@@ -3,10 +3,10 @@ package com.cassandradb.client.client.service.configuration;
 import java.util.List;
 import java.util.Map;
 
-import com.cassandradb.client.client.configuraion.DatabaseConfig;
 import com.cassandradb.client.client.configuraion.TableConfig;
 import com.cassandradb.client.client.service.exceptions.ConfigNotFoundException;
 import com.cassandradb.client.client.service.exceptions.DatabaseAlreadyExistsException;
+import com.cassandradb.client.client.service.exceptions.DbServiceException;
 import com.cassandradb.client.client.service.exceptions.InvalidRequestException;
 import com.cassandradb.client.client.service.exceptions.ProcessingException;
 import com.cassandradb.client.client.service.exceptions.TableAlreadyExistsException;
@@ -33,7 +33,7 @@ public interface ConfigurationAdmin
      */
     void createDatabase(DatabaseConfig databaseConfig)
         throws InvalidRequestException, DatabaseAlreadyExistsException,
-        ProcessingException;
+        ProcessingException, DbServiceException;
 
     /**
      * Creates a database based on the configuration defined in the
@@ -51,7 +51,7 @@ public interface ConfigurationAdmin
      *                                 request
      */
     boolean createDatabaseIfNotExist(DatabaseConfig databaseConfig)
-        throws InvalidRequestException, ProcessingException;
+        throws InvalidRequestException, ProcessingException, DbServiceException;
 
     /**
      * Creates a table in a database based on the configuration defined in the

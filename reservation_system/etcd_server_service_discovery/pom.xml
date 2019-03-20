@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.reservsystem</groupId>
+		<artifactId>compile</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../compile</relativePath>
+	</parent>
+	<groupId>com.etcdserver</groupId>
+	<artifactId>etcd_server_service_discovery</artifactId>
+	<name>${project.groupId}.${project.artifactId}</name>
+	<packaging>jar</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<etcd4j.version>1.2</etcd4j.version>
+		<retry4j.version>0.12.0</retry4j.version>
+		
+		<start-class>com.etcdserver.ETCDServer</start-class>
+	</properties>
+	<dependencies>
+		<!-- ETCD Service Discovery -->
+		<dependency>
+			<groupId>com.xqbase</groupId>
+			<artifactId>etcd4j</artifactId>
+			<version>${etcd4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.evanlennick</groupId>
+			<artifactId>retry4j</artifactId>
+			<version>${retry4j.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot.version}</version>
+				<configuration>
+					<mainClass>${start-class}</mainClass>
+					<!--<jvmArguments>-Xdebug</jvmArguments> -->
+					<!--<jvmArguments>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</jvmArguments> -->
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -3,7 +3,6 @@ package com.cassandradb.client.client.configuraion;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.commons.lang.enums.EnumUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -42,8 +41,8 @@ public class TableConfig
 	    throw new IllegalArgumentException(
 	        "tableOptions must be set and shouldn't be null or empty");
 	}
-	if (builder.tableType == null || EnumUtils.getEnum(TableType.class,
-	    builder.tableType.name()) == null)
+	if (builder.tableType == null
+	    || !TableType.class.isAssignableFrom(builder.tableType.getClass()))
 	{
 	    throw new IllegalArgumentException(
 	        "tableType must be set and should be a valid value");

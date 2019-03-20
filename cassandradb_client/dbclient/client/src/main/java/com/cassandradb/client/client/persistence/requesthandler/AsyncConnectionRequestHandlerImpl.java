@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 import com.cassandradb.client.client.service.AsyncConnectionRequestHandler;
 
 @Repository("myAsyncConnectionRequestHandler")
-public class AsyncConnectionRequestHandlerImpl implements AsyncConnectionRequestHandler{
-
+public class AsyncConnectionRequestHandlerImpl
+    implements AsyncConnectionRequestHandler
+{
+    public AsyncConnectionRequestHandlerImpl()
+    {
+    }
 }
