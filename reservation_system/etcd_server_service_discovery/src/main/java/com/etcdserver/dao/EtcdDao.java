@@ -1,4 +1,4 @@
-package com.etcdserver.servicediscovery;
+package com.etcdserver.dao;
 
 import java.net.URI;
 import java.time.temporal.ChronoUnit;
@@ -24,7 +24,7 @@ import com.xqbase.etcd4j.EtcdNode;
 
 /**
  * Handle operation around ETCD (connection, read, write).
- *
+ * 
  * @author amaresh
  */
 @Component
@@ -39,8 +39,8 @@ public class EtcdDao
     private String etcdServerHost;
 
     /**
-     * Retrieve expected from application.properties/application .yaml files
-     * Then, if not find use default value 2379
+     * Retrieve expected from application.properties files. Then, if not find
+     * use default value 2379
      */
     @Value("${etcd_server_port:2379}")
     private int etcdServerPort;
@@ -64,7 +64,7 @@ public class EtcdDao
 	etcdClient = new EtcdClient(URI.create(etcdUrl));
 	LOGGER.info(" + Client created");
 	// Enforcing read event if value is empty is only ways to ensure ETCD is
-	// stared and available.
+	// started and available.
 	read("/", false);
 	LOGGER.info("Connection etablished to ETCD Server");
     }
@@ -103,6 +103,7 @@ public class EtcdDao
 	    .retryOnAnyException().withMaxNumberOfTries(maxNumberOfTriesEtcd)
 	    .withDelayBetweenTries(delayBetweenTriesEtcd, ChronoUnit.SECONDS)
 	    .withFixedBackoff().build();
+
 	return new CallExecutor<List<EtcdNode>>(etcdRetryConfig)
 	    .afterFailedTry(s ->
 	    {
