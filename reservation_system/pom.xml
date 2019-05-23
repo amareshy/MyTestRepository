@@ -37,7 +37,5 @@
 		<module>compile</module>
 		<module>reservsystem_common</module>
 		<module>flight_booking_system</module>
-		<module>hotel_booking_system</module>
-		<module>etcd_server_service_discovery</module>
 	</modules>
 </project>

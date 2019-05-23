@@ -1,6 +1,4 @@
-package com.etcdserver.grpc;
-
-import static java.lang.String.format;
+package com.frs.server;
 
 import java.io.IOException;
 
@@ -9,10 +7,7 @@ import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.etcdserver.dao.EtcdDao;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -22,26 +17,12 @@ import io.grpc.examples.helloworld.HelloReply;
 import io.grpc.examples.helloworld.HelloRequest;
 import io.grpc.stub.StreamObserver;
 
-/**
- * Startup a GRPC server on expected port and register all services.
- */
 @Component
-public class GrpcServer
+public class GRPCServer
 {
-
     /** Some logger. */
     private static final Logger LOGGER = LoggerFactory
-        .getLogger(GrpcServer.class);
-
-    /** Connectivity to ETCD Service discovery. */
-    @Autowired
-    private EtcdDao etcdDao;
-
-    /**
-     * Communication channel between service, for now GUAVA inmemory messaging.
-     */
-    // @Inject
-    // private EventBus eventBus;
+        .getLogger(GRPCServer.class);
 
     /**
      * GRPC Server to set up.
@@ -57,42 +38,10 @@ public class GrpcServer
 	int port = 50051;
 	applicationUID = "localhost" + ":" + port;
 	LOGGER.info("Initializing Grpc Server...");
-	// Binding Services
-	/*
-	 * final ServerServiceDefinition commentService =
-	 * this.commentService.bindService(); final ServerServiceDefinition
-	 * ratingService = this.ratingService.bindService(); final
-	 * ServerServiceDefinition statisticsService =
-	 * this.statisticsService.bindService(); final ServerServiceDefinition
-	 * suggestedVideoService = this.suggestedVideosService.bindService();
-	 * final ServerServiceDefinition uploadsService =
-	 * this.uploadsService.bindService(); final ServerServiceDefinition
-	 * userManagementService = this.userManagementService.bindService();
-	 * final ServerServiceDefinition videoCatalogService =
-	 * this.videoCatalogService.bindService(); final ServerServiceDefinition
-	 * searchService = this.searchService.bindService();
-	 */
 
-	// Initializing GRPC endpoint
 	server = ServerBuilder.forPort(port).addService(new GreeterImpl())
 	    .build();
-	/*
-	 * .addService(commentService).addService(ratingService)
-	 * .addService(statisticsService).addService(suggestedVideoService)
-	 * .addService(uploadsService).addService(userManagementService)
-	 * .addService(videoCatalogService).addService(searchService).build();
-	 */
 
-	// Initialize Event bus
-	/*
-	 * eventBus.register(suggestedVideosService);
-	 * eventBus.register(cassandraMutationErrorHandler);
-	 */
-
-	/**
-	 * Declare a shutdown hook otherwise the JVM cannot be stop since the
-	 * Grpc server is listening on a port forever
-	 */
 	Runtime.getRuntime().addShutdownHook(new Thread()
 	{
 	    public void run()
@@ -107,8 +56,8 @@ public class GrpcServer
 	LOGGER.info("Grpc Server started on port: '{}'", server.getPort());
 
 	// Service are now Bound an started, declare in ETCD
-	final String applicationAdress = format("%s:%d", "reservation-system",
-	    port);
+	final String applicationAdress = String.format("%s:%d",
+	    "reservation-system", port);
 	LOGGER.info("Registering services in ETCD with address {}",
 	    applicationAdress);
 	registerServicesToEtcd(applicationAdress);
@@ -137,10 +86,10 @@ public class GrpcServer
 	{
 	    final String shortName = shortenServiceName(
 	        service.getServiceDescriptor().getName());
-	    final String serviceKey = format("/reservation/services/%s/%s",
-	        shortName, applicationUID);
+	    final String serviceKey = String.format(
+	        "/reservation/services/%s/%s", shortName, applicationUID);
 	    LOGGER.info(" + [{}] : key={}", shortName, serviceKey);
-	    etcdDao.register(serviceKey, applicationAdress);
+	    // etcdDao.register(serviceKey, applicationAdress);
 	}
     }
 
