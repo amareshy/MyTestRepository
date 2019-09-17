@@ -4,18 +4,24 @@ import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.etcd.client.client.service.EntityData;
+import com.etcd.client.client.service.EntityKey;
+import com.etcd.client.client.service.EntityProperty;
+import com.etcd.client.client.service.EntityValue;
+import com.etcd.client.client.service.EtcdDataAccessorService;
+import com.etcd.client.client.service.LeaseKeepAliveObserver;
+import com.frs.services.UserManagentService;
+
+import io.etcd.jetcd.lease.LeaseKeepAliveResponse;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerServiceDefinition;
-import io.grpc.examples.helloworld.GreeterGrpc.GreeterImplBase;
-import io.grpc.examples.helloworld.HelloReply;
-import io.grpc.examples.helloworld.HelloRequest;
-import io.grpc.stub.StreamObserver;
 
 @Component
 public class GRPCServer
@@ -32,14 +38,24 @@ public class GRPCServer
     /** Initiqlized once at startup use for ETCD. */
     private String applicationUID;
 
+    @Inject
+    private EtcdDataAccessorService etcdDataAccess;
+
+    @Inject
+    private UserManagentService myUserMgmtService;
+
     @PostConstruct
     public void start() throws Exception
     {
 	int port = 50051;
-	applicationUID = "localhost" + ":" + port;
+	String applicationHost = "127.0.0.1";
+	applicationUID = "1";
 	LOGGER.info("Initializing Grpc Server...");
 
-	server = ServerBuilder.forPort(port).addService(new GreeterImpl())
+	final ServerServiceDefinition userManagementService = this.myUserMgmtService
+	    .bindService();
+
+	server = ServerBuilder.forPort(port).addService(userManagementService)
 	    .build();
 
 	Runtime.getRuntime().addShutdownHook(new Thread()
@@ -56,19 +72,18 @@ public class GRPCServer
 	LOGGER.info("Grpc Server started on port: '{}'", server.getPort());
 
 	// Service are now Bound an started, declare in ETCD
-	final String applicationAdress = String.format("%s:%d",
-	    "reservation-system", port);
+	final String applicationAdress = String.format("%s:%d", applicationHost,
+	    port);
 	LOGGER.info("Registering services in ETCD with address {}",
 	    applicationAdress);
-	registerServicesToEtcd(applicationAdress);
+	registerServicesToEtcd(applicationAdress, userManagementService);
 	LOGGER.info("Services now registered in ETCD");
+	server.awaitTermination();
     }
 
     @PreDestroy
     public void stop()
     {
-	// eventBus.unregister(suggestedVideosService);
-	// eventBus.unregister(cassandraMutationErrorHandler);
 	server.shutdown();
     }
 
@@ -87,27 +102,53 @@ public class GRPCServer
 	    final String shortName = shortenServiceName(
 	        service.getServiceDescriptor().getName());
 	    final String serviceKey = String.format(
-	        "/reservation/services/%s/%s", shortName, applicationUID);
+	        "flightReservationSystem/services/%s/%s", shortName,
+	        applicationUID);
 	    LOGGER.info(" + [{}] : key={}", shortName, serviceKey);
-	    // etcdDao.register(serviceKey, applicationAdress);
+
+	    EntityProperty property = EntityProperty.newBuilder().withTtl(5)
+	        .withLeaseKeepAliveObserver(new LeaseKeepAliveObserver()
+	        {
+
+		    @Override
+		    public void onNext(LeaseKeepAliveResponse value)
+		    {
+		        LOGGER.debug("onNext LeaseKeepAliveResponse :: id :"
+		            + value.getID() + " TTL: " + value.getTTL());
+
+		    }
+
+		    @Override
+		    public void onError(Throwable t)
+		    {
+		        LOGGER.error("onError LeaseKeepAliveResponse :: ", t);
+
+		    }
+
+		    @Override
+		    public void onCompleted()
+		    {
+		        LOGGER.debug("onCompleted LeaseKeepAliveResponse ");
+		    }
+	        }).build();
+
+	    EntityKey entityKey = EntityKey.newBuilder().withKeyName(serviceKey)
+	        .build();
+	    EntityValue entityValue = EntityValue.newBuilder()
+	        .withValue(applicationAdress).build();
+
+	    etcdDataAccess.register(EntityData.newBuilder()
+	        .withEntityKey(entityKey).withEntityValue(entityValue)
+	        .withEntityProperty(property).build());
+
 	}
     }
 
     /**
-     * Remove special caracters.
+     * Remove special characters.
      */
     private String shortenServiceName(String fullServiceName)
     {
 	return fullServiceName.replaceAll(".*\\.([^.]+)", "$1");
-    }
-
-    static class GreeterImpl extends GreeterImplBase
-    {
-	@Override
-	public void sayHello(HelloRequest request,
-	    StreamObserver<HelloReply> responseObserver)
-	{
-	    super.sayHello(request, responseObserver);
-	}
     }
 }

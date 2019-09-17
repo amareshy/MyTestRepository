@@ -4,9 +4,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- <parent> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-parent</artifactId> 
-		<version>2.0.2.RELEASE</version> </parent> -->
-
 	<groupId>com.reservsystem</groupId>
 	<artifactId>compile</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -23,20 +20,21 @@
 		<dbclient.version>0.0.1-SNAPSHOT</dbclient.version>
 		<javax.inject.version>1</javax.inject.version>
 		<gson.version>2.8.2</gson.version>
+		<guava.version>22.0-android</guava.version>
 
 		<!-- Spring -->
 		<spring-boot.version>2.0.0.RELEASE</spring-boot.version>
 
-		<!-- GRPC -->
-		<grpc.version>1.10.0</grpc.version>
-		<protobuf.version>3.5.1-1</protobuf.version>
-		<protobuf.java.version>3.5.1</protobuf.java.version>
-		<protoc-gen-grpc.version>1.10.0</protoc-gen-grpc.version>
+		<!-- ETCD Service Discovery client -->
+		<etcdclient.version>0.0.1-SNAPSHOT</etcdclient.version>
 
-		<protoc.version>3.6.1</protoc.version>
+		<!-- Protobuf generated library of services -->
+		<frs.grpcprotoservices.version>0.0.1-SNAPSHOT</frs.grpcprotoservices.version>
+
+		<!-- Cassandra DB client -->
+		<dbclient.version>0.0.1-SNAPSHOT</dbclient.version>
 
 		<!-- Project -->
-		<protobuf-maven-plugin.version>0.5.0</protobuf-maven-plugin.version>
 		<start-class>com.etcdserver.GRPCServer</start-class>
 	</properties>
 
@@ -47,7 +45,20 @@
 			<version>${commons.logging}</version>
 		</dependency>
 
-		<!-- FRS module dependencies -->
+		<!-- Service registry dependencies -->
+		<dependency>
+			<groupId>com.etcd.client</groupId>
+			<artifactId>client</artifactId>
+			<version>${etcdclient.version}</version>
+		</dependency>
+
+		<!-- -->
+		<dependency>
+			<groupId>com.frs</groupId>
+			<artifactId>grpcprotoservices</artifactId>
+			<version>${frs.grpcprotoservices.version}</version>
+		</dependency>
+		<!-- FRS database client dependencies -->
 		<dependency>
 			<groupId>com.cassandradb.client</groupId>
 			<artifactId>client</artifactId>
@@ -71,31 +82,11 @@
 			<artifactId>spring-boot-starter</artifactId>
 			<version>${spring-boot.version}</version>
 		</dependency>
-
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-web</artifactId> 
-			</dependency> <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-test</artifactId> 
-			<scope>test</scope> </dependency> -->
-
-		<!-- Grpc / Protobuf -->
+		
 		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-all</artifactId>
-			<version>${grpc.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-handler</artifactId>
-			<version>4.1.34.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.protobuf</groupId>
-			<artifactId>protobuf-java</artifactId>
-			<version>${protobuf.java.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>${gson.version}</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -109,7 +100,6 @@
 				</configuration>
 				<version>${build.plugins.plugin.version}</version>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>

@@ -14,7 +14,8 @@
 	<name>${project.groupId}/${project.artifactId}</name>
 	<properties>
 		<build.plugins.plugin.version>3.5.1</build.plugins.plugin.version>
-		<cassandra.driver>3.1.0</cassandra.driver>
+		<cassandra.driver>3.7.1</cassandra.driver>
+		<cassandra.driver.mapping>3.7.1</cassandra.driver.mapping>
 		<commons.logging>1.2</commons.logging>
 		<junit.version>4.12</junit.version>
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
@@ -32,7 +33,7 @@
 		<dependency>
 			<groupId>com.datastax.cassandra</groupId>
 			<artifactId>cassandra-driver-mapping</artifactId>
-			<version>${cassandra.driver}</version>
+			<version>${cassandra.driver.mapping}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
