@@ -18,7 +18,7 @@
 		<cassandra.driver.mapping>3.7.1</cassandra.driver.mapping>
 		<commons.logging>1.2</commons.logging>
 		<junit.version>4.12</junit.version>
-		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
+		<org.springframework-version>5.2.7.RELEASE</org.springframework-version>
 		<embeded.cassandra>6.0.0</embeded.cassandra>
 		<nety.all.version>4.1.25.Final</nety.all.version>
 		<commons-lang.version>2.6</commons-lang.version>
